@@ -1,0 +1,54 @@
+<section class="pb-16 bg-gray-100">
+  <div class="container xl:w-[90%]">
+
+    <h2 class="text-2xl text-green-600 font-medium">
+      Shop All Categories
+    </h2>
+
+    <div class="parent grid mt-6 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+
+      @for (category of categoriesList(); track category._id) {
+
+        <div
+          class="card flex flex-col overflow-hidden justify-between h-full
+                 bg-white rounded-md shadow-xs hover:shadow-md transition">
+
+          <!-- image -->
+          <div class="cursor-pointer">
+            <img
+              class="w-full h-96 card "
+              [src]="category.image"
+              [alt]="category.name"
+              [title]="category.name"
+            >
+          </div>
+
+          <!-- content -->
+          <div class="p-3 text-center">
+            <h3 class="text-green-600 text-base font-medium">
+              {{ category.name }}
+            </h3>
+          </div>
+
+        </div>
+
+      }  @empty {
+
+<div class="col-span-5 w-1/4 mx-auto">
+    <div class="p-4 mt-4 text-center text-base border-2 border-green-600 ring-green-600/50 text-green-600 rounded-base bg-gray-200 " role="alert">
+No Data Found
+    </div>
+</div>
+
+
+
+
+
+
+
+            }
+
+    </div>
+
+  </div>
+</section>

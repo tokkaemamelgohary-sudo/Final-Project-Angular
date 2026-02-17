@@ -1,0 +1,83 @@
+<section class="border border-gray-200 shadow-xs rounded bg-gray-200 md:w-1/2 mt-5 p-4 mx-auto">
+  <div class="title">
+    <h2 class="mb-3 text-green-600 font-medium text-3xl text-center">Verify Reset Code</h2>
+    <p class="mb-4 text-gray-600 text-center">
+      Please enter the verification code sent to 
+      <strong class="text-green-600">{{ userEmail() }}</strong>
+    </p>
+  </div>
+
+  <form [formGroup]="verifyCodeForm" (ngSubmit)="submitVerifyCodeForm()">
+    <div class="mb-3">
+      <label for="resetCode" class="main-label">Verification Code</label>
+      <input 
+        formControlName="resetCode" 
+        type="text" 
+        id="resetCode" 
+        class="main-input text-center text-2xl tracking-widest" 
+        placeholder="000000"
+        maxlength="6"
+      />
+      
+      @let codeControl = verifyCodeForm.get('resetCode');
+      
+      @if (codeControl?.errors && codeControl?.touched) {
+        <div class="flex px-3 py-2 mt-0.5 text-base text-red-800 rounded-xs bg-red-100" role="alert">
+          <span class="sr-only">Danger</span>
+          <div>
+            <ul class="list-disc list-inside">
+              @if (codeControl?.getError('required')) {
+                <li>Verification code is required</li>
+              }
+              @else if (codeControl?.getError('pattern')) {
+                <li>Verification code must be 6 digits</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="flex flex-wrap justify-center mb-3">
+      <button 
+        [disabled]="isLoading()" 
+        type="submit" 
+        class="btn-main px-6 w-full"
+      >
+        Verify Code
+        @if (isLoading()) {
+          <span>
+            <i class="fas fa-spinner animate-spin ml-2"></i>
+          </span>
+        }
+      </button>
+    </div>
+
+    @if (successMessage()) {
+      <div class="flex px-3 py-2 mt-0.5 text-base text-green-800 rounded-xs bg-green-100" role="alert">
+        <span class="sr-only">Success</span>
+        <p>{{ successMessage() }}</p>
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="flex px-3 py-2 mt-0.5 text-base text-red-800 rounded-xs bg-red-100" role="alert">
+        <span class="sr-only">Danger</span>
+        <p>{{ errorMessage() }}</p>
+      </div>
+    }
+
+    <div class="text-center mt-4">
+      <button 
+        type="button" 
+        (click)="resendCode()" 
+        [disabled]="isLoading()"
+        class="text-green-600 hover:text-green-700 underline"
+      >
+        Resend Code
+      </button>
+    </div>
+
+    
+  </form>
+</section>

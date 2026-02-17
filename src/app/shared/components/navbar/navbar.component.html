@@ -1,0 +1,244 @@
+<nav class="bg-gray-200 border-b border-default fixed top-0 inset-x-0 z-20 w-full">
+  <div class="flex items-center justify-between mx-2 py-4">
+    
+    <!-- Logo -->
+    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="/assets/images/freshcart-logo.svg" alt="freshcart-logo" />
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      data-collapse-toggle="navbar-default" 
+      type="button" 
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" 
+      aria-controls="navbar-default" 
+      aria-expanded="false"
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
+      </svg>
+    </button>
+
+    <!-- Main Navigation Container -->
+    <div class="hidden w-full md:flex md:grow md:w-auto" id="navbar-default">
+      
+      <!-- Left Menu (Main Navigation) - Only show when logged in -->
+      @if (isLogin === true) {
+        <ul class="font-medium ms-4 flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base md:flex-row md:space-x-3 rtl:space-x-reverse md:mt-0 md:border-0">
+          <li>
+            <a 
+              routerLink="/home" 
+              routerLinkActive="bg-green-600 text-white" 
+              class="block py-2 px-3 text-gray-700 rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'Home' | translate }}
+            </a>
+          </li>
+          
+          <li>
+            <a 
+              routerLink="/products" 
+              routerLinkActive="bg-green-600 text-white" 
+              class="block py-2 px-3 text-gray-700 rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'Product' | translate }}
+            </a>
+          </li>
+          
+          <li>
+            <a 
+              routerLink="/categories" 
+              routerLinkActive="bg-green-600 text-white" 
+              class="block py-2 px-3 text-gray-700 rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'Categories' | translate }}
+            </a>
+          </li>
+          
+          <li>
+            <a 
+              routerLink="/brands" 
+              routerLinkActive="bg-green-600 text-white" 
+              class="block py-2 px-3 text-gray-700 rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'Brands' | translate }}
+            </a>
+          </li>
+        </ul>
+      }
+
+      <!-- Right Menu (Social Media + Language + Auth) -->
+      <ul class="font-medium flex flex-col md:ms-auto p-4 md:p-0 mt-4 border border-default rounded-base md:flex-row md:space-x-2 rtl:space-x-reverse md:mt-0 md:border-0">
+        
+        <!-- Social Media Icons -->
+        <li>
+          <a href="#" class="block py-2 px-1 text-gray-700 rounded md:py-1" aria-current="page">
+            <i class="fab fa-facebook"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a href="#" class="block py-2 px-1 text-gray-700 rounded md:py-1" aria-current="page">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a href="#" class="block py-2 px-1 text-gray-700 rounded md:py-1" aria-current="page">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a href="#" class="block py-2 px-1 text-gray-700 rounded md:py-1" aria-current="page">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </li>
+
+        <!-- Language Switcher Dropdown -->
+        <li>
+          <div class="relative inline-block text-left">
+            
+            <!-- Dropdown Button -->
+            <button
+              (click)="toggleDropdown()"
+              class="inline-flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 duration-200"
+              type="button"
+            >
+              <!-- Selected Language Code -->
+              <span class="font-semibold uppercase">
+                {{ selectedLanguage.code }}
+              </span>
+
+              <!-- Dropdown Arrow -->
+              <svg
+                class="w-5 h-5 ms-2 transition-transform duration-200"
+                [class.rotate-180]="isOpen"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            @if (isOpen) {
+              <div class="absolute end-0 z-10 mt-2 w-44 origin-top-end rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                <div class="py-1">
+                  @for (language of languages; track language.code) {
+                    <button
+                      (click)="selectLanguage(language)"
+                      class="flex items-center w-full px-4 py-2 text-sm justify-center transition-colors duration-150 hover:bg-green-50"
+                      [class.bg-green-600]="language.code === selectedLanguage.code"
+                      [class.text-white]="language.code === selectedLanguage.code"
+                      type="button"
+                    >
+                      <div class="flex items-center gap-3 w-full">
+                        <!-- CODE -->
+                        <span class="font-semibold uppercase w-8">
+                          {{ language.code }}
+                        </span>
+
+                        <!-- NAME -->
+                        <span class="text-xs">
+                          {{ language.name }}
+                        </span>
+
+                        <!-- CHECK -->
+                        @if (language.code === selectedLanguage.code) {
+                          <span class="ms-auto text-green-600 font-bold">✓</span>
+                        }
+                      </div>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Backdrop to close dropdown -->
+          @if (isOpen) {
+            <div
+              (click)="closeDropdown()"
+              class="fixed inset-0 z-0"
+            ></div>
+          }
+        </li>
+
+        <!-- Authentication Links (Register/Login or Cart/Wishlist/SignOut) -->
+        @if (isLogin === false) {
+          <li>
+            <a 
+              routerLink="/register" 
+              routerLinkActive="bg-green-600 text-white" 
+              class="block py-2 px-3 text-gray-700 rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'Register' | translate }}
+            </a>
+          </li>
+
+          <li>
+            <a 
+              routerLink="/login" 
+              routerLinkActive="bg-green-600 text-white" 
+              class="block py-2 px-3 text-gray-700 rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'Login' | translate }}
+            </a>
+          </li>
+        } @else {
+          <!-- Cart Icon -->
+          <li>
+            <a 
+              routerLink="/cart" 
+              class="block relative cursor-pointer py-2 px-3 text-gray-500 rounded-base md:p-0"
+            >
+              <i class="fas fa-cart-shopping text-2xl"></i>
+              <span class="sr-only">Number Of Cart Item</span>
+              <div class="absolute flex items-center justify-center w-6 h-6 text-sm font-bold text-white bg-green-600 rounded-full -top-2 -end-1">
+                {{ count() }}
+              </div>
+            </a>
+          </li>
+
+          <!-- Wishlist Icon -->
+          <li>
+            <a 
+              routerLink="/wishlist" 
+              class="block relative cursor-pointer py-2 px-3 text-gray-500 rounded-base md:p-0"
+            >
+              <i class="text-2xl fa-regular fa-heart"></i>
+              <span class="sr-only">Number Of wishlist Item</span>
+              <div class="absolute flex items-center justify-center w-6 h-6 text-sm font-bold text-white bg-green-600 rounded-full -top-2 -end-1">
+                {{ countw() }}
+              </div>
+            </a>
+          </li>
+
+          <!-- Sign Out -->
+          <li>
+            <a 
+              (click)="signOut()" 
+              class="block py-2 px-3 text-gray-700 cursor-pointer rounded-xs md:py-1 md:px-2" 
+              aria-current="page"
+            >
+              {{ 'SignOut' | translate }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

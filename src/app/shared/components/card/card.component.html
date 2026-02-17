@@ -1,0 +1,35 @@
+<div class="card relative flex flex-col overflow-hidden justify-between h-full group/card">
+
+  <i
+    (click)="addProductItemToWishlist(cardProduct.id)"
+    [class.fas]="isInWishlist()"
+    [class.far]="!isInWishlist()"
+    [class.text-red-500]="isInWishlist()"
+    [class.text-gray-500]="!isInWishlist()"
+    class="fa-heart absolute top-3 right-3 text-xl cursor-pointer hover:text-red-500 transition-colors duration-300 z-10">
+  </i>
+
+  <div [routerLink]="['/details', cardProduct.slug, cardProduct.id]" class="cursor-pointer">
+    <img [src]="cardProduct.imageCover" [alt]="cardProduct.title" [title]="cardProduct.title">
+
+    <div class="flex flex-col h-full">
+      <h3 class="text-green-600 text-sm">{{cardProduct.category.name}}</h3>
+      <h4 class="text-lg pb-2">{{cardProduct.title | split : 2}}</h4>
+
+      <div class="flex flex-wrap items-center justify-between pb-2">
+        <span>{{cardProduct.price | currency : 'GBP'}}</span>
+        <span>
+          <i class="fas fa-star text-yellow-500"></i>
+          {{cardProduct.ratingsAverage}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <button 
+    (click)="addProductItemToCart(cardProduct.id)"
+    class="btn-main w-full translate-y-[120%] group-hover/card:translate-0 transition-[translate] duration-500">
+    Add To Cart
+  </button>
+
+</div>

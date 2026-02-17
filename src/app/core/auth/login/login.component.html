@@ -1,0 +1,104 @@
+<section class="border border-gray-200 shadow-xs rounded bg-gray-200 md:w-1/2 mt-5 p-4 mx-auto">
+    
+    <div class="title">
+        <h2 class="mb-3 text-green-600 font-medium text-3xl text-center">Login Now</h2>
+    </div>
+
+
+<form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+
+ 
+
+ <div class="mb-3">
+        <label for="email" class="main-label">Email</label>
+        <input formControlName="email"  type="email"  id="email"  class=" main-input "  />
+   @let emailControl =   loginForm.get('email');
+
+     @if (emailControl?.errors && emailControl?.touched ) {
+     <div class="flex px-3 py-2 nt-0.5 text-base text-red-800 rounded-xs bg-red-100" role="alert">
+        <span class="sr-only">Danger</span>
+        <div>
+            <ul class=" list-disc list-inside">
+@if ( emailControl?.getError('required')) {                <li>Email input is required</li>   }
+
+@else if (emailControl?.getError('email')) {<li>Please enter valid email address</li>   }
+
+
+            </ul>
+        </div>
+    </div>
+   }
+    </div>
+
+
+
+ <div class="mb-3 relative" >
+
+          @let passwordControl = loginForm.get('password');
+
+
+        <label for="password" class="main-label">Password</label>
+        <input formControlName="password"  [type]="flag === true ? 'password' : 'text' "  id="password"  class=" main-input "  />
+     
+
+<span  (click)="togglePasswordType()" class="absolute top-0 end-2 translate-y-[130%] cursor-pointer">
+  <i [class]="{
+    'fa-eye' : flag === true,
+    'fa-eye-slash' : flag === false
+  }"
+  class="fas "></i>
+</span>
+
+    @if (passwordControl?.errors && passwordControl?.touched) {
+  <div class="flex px-3 py-2 mt-0.5 text-base text-red-800 rounded-xs bg-red-100" role="alert">
+    <span class="sr-only">Danger</span>
+    <div>
+      <ul class="list-disc list-inside">
+        @if (passwordControl?.getError('required')) {
+          <li>Password is required</li>
+        }
+        @else if (passwordControl?.getError('pattern')) {
+          <li>
+            Password must be at least 8 characters, include uppercase,
+            lowercase, number and special character
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+}
+    </div>
+
+    <!-- Forgot Password Link & Login Button -->
+    <div class="flex flex-wrap justify-between items-center mb-3">
+      <a routerLink="/forgot-password" class="text-green-600 hover:text-green-700 underline text-sm cursor-pointer">
+        Forgot your password?
+      </a>
+      
+      <button [disabled]="isLoading()" type="submit" class="btn-main px-3">Login
+       @if (isLoading()) {  
+         <span>
+            <i class="fas fa-spinner animate-spin"></i>
+          </span>}
+      </button>
+    </div>
+
+
+
+ 
+@if (errorMessage()) {
+
+
+<div class="flex px-3 py-2 mt-0.5 text-base text-red-800 rounded-xs bg-red-100" role="alert">
+    <span class="sr-only">Danger</span>
+      <p>{{errorMessage()}}</p>
+    </div>
+}
+
+
+
+</form>
+
+
+
+</section>

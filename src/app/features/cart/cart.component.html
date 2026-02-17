@@ -1,0 +1,100 @@
+<section class="bg-gray-200 p-4 ">
+    <div class="container">
+
+        <div class="parent grid sm:grid-cols-12 gap-10">
+            <div class="col-span-8">
+                <div class="bg-gray-200 p-4 shadow rounded-lg">
+                    <div class="flew flex-wrap gap-3 mb-3">
+<div class="flex justify-between items-center mb-3">
+    <h1 class="text-xl">Cart</h1>
+
+    <button (click)="clearCart()" class=" text-2xl cursor-pointer" title="Clear Cart">
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+
+                        @if (cartDetailsData().products ) {
+                        <span class="text-xl">{{ cartDetailsData().products.length}} Item</span>
+                        }
+                    </div>
+
+
+                    @for (item of cartDetailsData().products; track item.product._id)
+                    {<div class="parent gap-2 grid sm:grid-cols-12  bg-light p-4 shadow rounded-lg mb-3">
+                        <div class="col-span-1">
+                            <div>
+                                <div>
+                                    <img [src]="item.product.imageCover" [alt]="item.product.title">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-span-11">
+                            <div class="flex flex-wrap justify-between items-center  ">
+                                <div>
+                                    <h3 class="pt-3 text-lg ">{{item.product.title}}</h3>
+
+                                    <div class="flex flex-wrap gap-3">
+                                        <div class="bg-gray-200 border rounded-md py-1 px-3 flex flex-wrap space-x-3">
+                                            <button (click)="updateProductCount(item.product._id , item.count - 1)" class="cursor-pointer">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <span>{{item.count}}</span>
+                                            <button (click)="updateProductCount(item.product._id , item.count + 1)" class="cursor-pointer">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+
+                                        <button (click)="removeProductItemFromCart(item.product._id)" class="cursor-pointer">
+                                            <i class="fas fa-trash-can"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+
+                                <span> {{item.price * item.count |currency:'GBP'}} </span>
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>}
+                    @empty {
+                    <h2>No Data Found...</h2>
+                    }
+
+
+
+
+
+
+                </div>
+            </div>
+
+            <div class="col-span-4">
+                <div class="bg-gray-200 shadow rounded-lg p-4 border border-gray-200">
+                    <h2 class="text-2xl">Order Summary</h2>
+                    <div class="flex flex-wrap justify-between items-center py-3">
+                        <span class="text-lg">Price</span>
+                        <span class="text-lg">{{cartDetailsData().totalCartPrice |currency: 'GBP'}} </span>
+                    </div>
+                  
+                  
+<button
+  [routerLink]="['/checkout', cartDetailsData()._id]"
+  class="btn-main w-full"
+  [disabled]="!cartDetailsData().products || cartDetailsData().products.length === 0">
+  Proceed to checkout
+</button>
+                
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

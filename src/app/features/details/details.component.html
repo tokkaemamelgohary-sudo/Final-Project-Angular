@@ -1,0 +1,58 @@
+@if (productDetailsData().category) {
+
+    <section class="py-16">
+    <div class="container xl:w[90%]">
+<div class="grid sm:grid-cols-12 items-center">
+<div class="col-span-3">
+<div>
+<img class="w-full"
+[src]="productDetailsData().imageCover" 
+[alt]="productDetailsData().title" 
+[title]="productDetailsData().title">
+</div>
+</div>
+
+<div class="col-span-9">
+    <div>
+<h2 class="text-xl py-2">{{productDetailsData().title}}</h2>
+
+<p class="text-gray-500 text-sm pb-2">{{productDetailsData().description}}</p>
+
+<h3 class="text-green-600 pb-2 text-base">{{productDetailsData().category.name}}</h3>
+
+
+<div class="flex flex-wrap items-center justify-between pb-2">
+    <span>{{productDetailsData().price}} EGP</span>
+    <span>
+     <i class="fas fa-star text-yellow-500"></i>
+        {{productDetailsData().ratingsAverage}} 
+    </span>
+</div>
+
+</div>
+    </div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</section>
+
+}@else {
+    
+<div class=" w-1/4 mx-auto">
+    <div class="p-4 mt-4 text-center text-base border-2 border-green-600 ring-green-600/50 text-green-600 rounded-base bg-gray-200 " role="alert">
+No Data Found
+    </div>
+</div>
+
+}

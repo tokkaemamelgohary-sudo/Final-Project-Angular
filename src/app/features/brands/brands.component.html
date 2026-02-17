@@ -1,0 +1,54 @@
+<section class="pb-16 bg-gray-100">
+  <div class="container xl:w-[90%]">
+
+    <h2 class="text-2xl text-green-600 font-medium">
+      Shop All Brands
+    </h2>
+
+    <!-- brands grid -->
+    <div
+      class="parent grid mt-6 gap-3
+             sm:grid-cols-2
+             md:grid-cols-3
+             lg:grid-cols-4
+             xl:grid-cols-5">
+
+      @for (brand of brandsList(); track brand._id) {
+
+        <div
+          class="card flex flex-col overflow-hidden justify-between h-full
+                 bg-white rounded-md shadow-xs
+                 hover:shadow-md transition cursor-pointer">
+
+          <!-- image wrapper -->
+          <div class="w-full h-40 overflow-hidden flex items-center justify-center">
+            <img
+              class="max-w-full max-h-full object-contain p-4"
+              [src]="brand.image"
+              [alt]="brand.name"
+              [title]="brand.name"
+            >
+          </div>
+
+          <!-- brand name -->
+          <div class="p-3 text-center">
+            <h3 class="text-green-600 text-base font-medium">
+              {{ brand.name }}
+            </h3>
+          </div>
+
+        </div>
+
+      }  @empty {
+
+<div class="col-span-5 w-1/4 mx-auto">
+    <div class="p-4 mt-4 text-center text-base border-2 border-green-600 ring-green-600/50 text-green-600 rounded-base bg-gray-200 " role="alert">
+No Data Found
+    </div>
+</div>
+            }
+
+    </div>
+
+  </div>
+</section>
